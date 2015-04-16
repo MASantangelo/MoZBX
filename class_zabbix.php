@@ -158,7 +158,8 @@ class Zabbix
 
     public function Login()
     {
-        $result = $this->sendRequest("user.authenticate", array("user" => $this->getUsername(), "password" => $this->getPassword()));
+        // Fixes auth in Zabbix 2.4
+        $result = $this->sendRequest("user.login", array("user" => $this->getUsername(), "password" => $this->getPassword()));
 
         //$result				= $this->decodeJson($json_login);
         if (isset($result->result))
