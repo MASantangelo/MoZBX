@@ -519,22 +519,24 @@ class Zabbix
         // Lighttpd expects this header
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
 
-        if (in_array(substr($this->getVersion(), 0, 3), array('2.2', '2.0', '1.4'))) {
+        // Commenting Out getVersion if statement for testing --- this fixes #45
+        //if (in_array(substr($this->getVersion(), 0, 3), array('2.2', '2.0', '1.4'))) {
             /* API Version 1.4 = Zabbix 2.0+ */
-            $post_data = array(
-                'name' => $this->getUsername(),
-                'password' => $this->getPassword(),
-                'autologin' => 1,
-                'request' => '', /* Why is this empty? Zabbix requires it? */
-                'enter' => 'Sign in', /* Zabbix also checks the value of this string ... */
-            );
-        } else {
-            $post_data = array(
-                'name' => $this->getUsername(),
-                'password' => $this->getPassword(),
-                'enter' => 'Enter',
-            );
-        }
+        $post_data = array(
+            'name' => $this->getUsername(),
+            'password' => $this->getPassword(),
+            'autologin' => 1,
+            'request' => '', /* Why is this empty? Zabbix requires it? */
+            'enter' => 'Sign in', /* Zabbix also checks the value of this string ... */
+        );
+        //} else {
+        //    $post_data = array(
+        //        'name' => $this->getUsername(),
+        //        'password' => $this->getPassword(),
+        //        'enter' => 'Enter',
+        //    );
+        //}
+        
         // Add the POST-data
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
         curl_setopt($ch, CURLOPT_COOKIEJAR, $filename_cookie);
